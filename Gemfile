@@ -19,7 +19,7 @@ gem "jbuilder", "~> 2.7"
 gem "bootsnap", ">= 1.4.2", require: false
 
 group :development, :test do
-  gem "factory_bot"
+  gem "factory_bot_rails"
   gem "ffaker"
   gem "rspec-rails"
 end
