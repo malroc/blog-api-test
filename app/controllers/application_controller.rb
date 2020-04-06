@@ -4,7 +4,7 @@ class ApplicationController < ActionController::API
   def paginate(relation, page_size = 25)
     relation = relation.order(order_value)
     relation = relation.where("#{order_value} > ?", after_value) if after_value
-    relation = relation.limit(page_size)
+    relation.limit(page_size)
   end
 
   def order_value
