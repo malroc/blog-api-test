@@ -21,6 +21,12 @@ Style/FrozenStringLiteralComment:
 Style/Documentation:
   Enabled: false
 
+Style/SymbolArray:
+  Enabled: false
+
+Style/EmptyMethod:
+  Enabled: false
+
 Style/HashEachMethods:
   Enabled: true
 
@@ -29,3 +35,10 @@ Style/HashTransformKeys:
 
 Style/HashTransformValues:
   Enabled: true
+
+Layout/DotPosition:
+  EnforcedStyle: trailing
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*.rb
