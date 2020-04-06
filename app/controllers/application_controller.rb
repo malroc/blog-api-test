@@ -23,7 +23,7 @@ class ApplicationController < ActionController::API
       case order_value
       when "created_at"
         # HACK: stringified value is rounded to milliseconds, hence adding 1ms
-        #   make `after` value work as expected
+        #   to make `after` value work as expected
         params[:after].to_datetime + 0.001.seconds
       when "id"
         params[:after].to_i
