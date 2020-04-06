@@ -1,4 +1,12 @@
 class ApplicationController < ActionController::API
+  helper_method :current_user
+
+  def current_user
+    # STUB: always using the first user in the DB as current, create new user
+    #   if there are no users in the DB
+    @current_user ||= User.first || FactoryBot.create(:user)
+  end
+
   protected
 
   def paginate(relation, page_size = 25)
