@@ -9,7 +9,7 @@ class ApplicationController < ActionController::API
 
   def order_value
     @order_value ||=
-      if ["id", "created_at"].include?(params[:order])
+      if %w[id created_at].include?(params[:order])
         params[:order]
       else
         "id"
