@@ -14,10 +14,59 @@ describe "/posts" do
   end
 
   describe "GET /show" do
-    it "renders a successful response" do
-      post = Post.create! valid_attributes
-      get post_url(post), as: :json
-      expect(response).to be_successful
+    context "with like from current user" do
+      let(:like) { create(:like) }
+
+      it "shows that the post is liked" do
+        get post_url(like.post), as: :json
+        json = JSON.parse(response.body)
+        expect(json["is_liked"]).to eq true
+      end
+    end
+
+    context "with like from another user" do
+      let(:like) { create(:like) }
+
+      before { create(:user) }
+
+      it "shows that the post is not liked" do
+        get post_url(like.post), as: :json
+        json = JSON.parse(response.body)
+        expect(json["is_liked"]).to eq false
+      end
+    end
+
+    context "with several likes" do
+      let(:post_id) { create(:post).id }
+      let(:likes_count) { rand(1..10) }
+
+      before { create_list(:like, likes_count, post_id: post_id) }
+
+      it "shows correct likes_count value" do
+        get post_url(post_id), as: :json
+        json = JSON.parse(response.body)
+        expect(json["likes_count"]).to eq likes_count
+      end
+    end
+
+    context "with no comments" do
+      let(:post_id) { create(:post).id }
+
+      it "shows empty commented_at value" do
+        get post_url(post_id), as: :json
+        json = JSON.parse(response.body)
+        expect(json["commented_at"]).to be_nil
+      end
+    end
+
+    context "with comment" do
+      let(:comment) { create(:comment) }
+
+      it "shows commented_at timestamp as string" do
+        get post_url(comment.post), as: :json
+        json = JSON.parse(response.body)
+        expect(json["commented_at"]).to be_a String
+      end
     end
   end
 
